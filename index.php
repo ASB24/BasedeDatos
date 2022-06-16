@@ -1,6 +1,44 @@
 <?php
-    if(isset($_POST['submit'])) {
-        echo 'buenas';
+    $name = '';
+    $pass = '';
+    $file = '';
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+        $name = $_POST['name'];
+        $pass = $_POST['password'];
+        $file = './users/'.$name.'.txt';
+
+        if(isset($_POST['login']))
+        {
+            if (file_exists($file)) {
+                $reader = fopen($file, "r");
+                if( ($line = fgets($reader)) !== false && $line === $pass ){
+                    fclose($reader);
+                    signIn($name);
+                }else{
+                    echo "La contraseña ingresada no es correcta";
+                }
+                fclose($reader);
+            }else{
+                echo "El usuario no existe...";
+            }
+        }
+        else if(isset($_POST['create']))
+        {
+            $reader = fopen($file, "w");
+            fwrite($reader, $pass);
+            fclose($reader);
+            signIn($name);
+        }
+
+    }
+
+    function signIn($name){
+        session_start();
+        $_SESSION['name'] = $name;
+        header("Location: ./files.php");
+        exit();
     }
 ?>
 <!DOCTYPE html>
@@ -17,6 +55,18 @@
     <title>Ingresar a la pagina</title>
 </head>
 <body>
-    
+    <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post">
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre</label>
+          <input type="text" name="name" id="name" class="form-control" placeholder="" aria-describedby="nameHelp" required aria-required="true">
+          <small id="nameHelp" class="text-muted">Nombre de usuario</small>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" name="password" id="password" placeholder="" aria-required="true" required>
+        </div>
+        <input name="create" id="create" class="btn btn-primary" type="submit" value="Crear">
+        <input name="login" id="login" class="btn btn-primary" type="submit" value="Ingresar">
+    </form>
 </body>
 </html>

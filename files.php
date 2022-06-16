@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    $name = $_SESSION['name'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +14,11 @@
 
     <link rel="stylesheet" href="./style.css">
 
-    <title>Document</title>
+    <title>Subir archivo</title>
 </head>
 <body>
-    
+    <?php
+        echo "Bienvenid@, $name";
+    ?>
 </body>
 </html>
