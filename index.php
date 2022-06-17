@@ -56,21 +56,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
     <link rel="stylesheet" href="./style.css">
-    <title>Ingresar a la pagina</title>
+    <title>Enter Site</title>
 </head>
 <body>
     <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post">
         <div class="mb-3">
-          <label for="name" class="form-label">Nombre</label>
+          <label for="name" class="form-label">Username</label>
           <input type="text" name="name" id="name" class="form-control" placeholder="" aria-describedby="nameHelp" required aria-required="true">
-          <small id="nameHelp" class="text-muted">Nombre de usuario</small>
+          <small id="nameHelp" class="text-muted">Name for username</small>
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
           <input type="password" class="form-control" name="password" id="password" placeholder="" aria-required="true" required>
         </div>
-        <input name="create" id="create" class="btn btn-primary" type="submit" value="Crear">
-        <input name="login" id="login" class="btn btn-primary" type="submit" value="Ingresar">
+        <input name="create" id="create" class="btn btn-primary" type="submit" value="Sign Up">
+        <input name="login" id="login" class="btn btn-primary" type="submit" value="Sign In">
     </form>
     <?php
         if(!$userExists){

@@ -55,11 +55,11 @@
 
     <link rel="stylesheet" href="./style.css">
 
-    <title>Subir archivo</title>
+    <title>Upload Files</title>
 </head>
 <body>
     <?php
-        echo "<h1>Bienvenid@, $name</h1>";
+        echo "<h1>Welcome, $name</h1>";
         if($deletedConfirm){
             echo '
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
