@@ -19,7 +19,7 @@
 
             //Upload image
             $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-            if( move_uploaded_file( $_FILES['image']['tmp_name'], $file_name.$extension ) ){
+            if( move_uploaded_file( $_FILES['image']['tmp_name'], $file_name.".".$extension ) ){
                 echo "Upload completed!";
             }else{
                 echo "There was a problem uploading your file!";
@@ -80,14 +80,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">Stock File</th>
-                        <td>Stock Comment</td>
-                    </tr>
+                <?php
+                    $files = array_diff( scandir("./uploads/$name/"), array('.','..') );
+                    foreach( $files as $file ){
+                        $ext = explode(".", $file)[1];
+                        if($ext !== "txt"){
+                            echo "
+                            <tr>
+                                <th scope=\"row\">$file</th>
+                            ";
+                        }else{
+                            echo "
+                                <td>$file</td>
+                            </tr>
+                            ";
+                        }
+                    }
+                ?>
                 </tbody>
                 
             </table>
         </div>
     </div>
+    <ul>
+        
+    </ul>
+    
 </body>
 </html>
