@@ -1,6 +1,7 @@
 <?php
     session_start();
     $name = $_SESSION['name'];
+    $exists = true;
 
     $item = '';
     $dir = "./uploads/$name/";
@@ -8,6 +9,26 @@
         $item = $_GET['item'];
     }
     $file_dir = $dir.$item;
+
+    if(isset($_GET['b']) && $_GET['b'] == true){
+        if(file_exists($file_dir)){
+            $files = array_diff( scandir($dir), array('.','..') );
+            $item = explode(".", $item)[0];
+
+
+            foreach( $files as $file ){
+                $compare = explode(".", $file)[0];
+                if($item === $compare){
+                    unlink($dir.$file);
+                }
+            }
+            $exists = false;
+            header("Location: ./files.php?m=true");
+            exit();
+        }else{
+            echo "File does not exist...";
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +48,9 @@
     <h1>Text Inside:</h1>
     <p>
         <?php
-            echo file_get_contents($file_dir);
+            if ($exists) {
+                echo file_get_contents($file_dir);
+            }
         ?>
     </p>
 </body>
