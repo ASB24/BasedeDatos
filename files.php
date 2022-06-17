@@ -1,6 +1,34 @@
 <?php
     session_start();
     $name = $_SESSION['name'];
+    date_default_timezone_set('America/Santo_Domingo');
+
+    $dir_name = "./uploads/$name/";
+    if(!is_dir($dir_name)){
+        mkdir($dir_name, 0777);
+    }
+
+    if( $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])){
+        $text = $_POST['comment'];
+        $file_name = $dir_name.$name.date("_Ymd_Hi");
+        if($image_info = getimagesize($_FILES["image"]["tmp_name"])){
+            //Write file
+            $reader = fopen($file_name.".txt", "w");
+            fwrite($reader, $text);
+            fclose($reader);
+
+            //Upload image
+            $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+            if( move_uploaded_file( $_FILES['image']['tmp_name'], $file_name.$extension ) ){
+                echo "Upload completed!";
+            }else{
+                echo "There was a problem uploading your file!";
+            }
+
+        }else{
+            echo "The file you are trying to upload is not an image...";
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,14 +59,14 @@
     </nav>
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="uploadImage" role="tabpanel" aria-labelledby="uploadImage-tab">
-            <form action="./upload.php" method="post">
+            <form action="<?php echo $_SERVER['PHP_SELF']?>" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="userComment">Comment</label>
                     <textarea class="form-control" id="userComment" rows="5" name="comment" required aria-required="true"></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="imagen" class="form-label">Image</label>
-                    <input class="form-control" type="file" id="imagen" accept="image/*" required aria-required="true">
+                    <input class="form-control" type="file" name="image" id="image" accept="image/*" required aria-required="true">
                 </div>
                 <button type="submit" name="upload" class="btn btn-primary">Upload</button>
             </form>
