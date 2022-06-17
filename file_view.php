@@ -1,3 +1,14 @@
+<?php
+    session_start();
+    $name = $_SESSION['name'];
+
+    $item = '';
+    $dir = "./uploads/$name/";
+    if(isset($_GET['item'])){
+        $item = $_GET['item'];
+    }
+    $file_dir = $dir.$item;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +21,14 @@
 
     <link rel="stylesheet" href="./style.css">
 
-    <title>Document</title>
+    <title>File View</title>
 </head>
 <body>
-    
+    <h1>Text Inside:</h1>
+    <p>
+        <?php
+            echo file_get_contents($file_dir);
+        ?>
+    </p>
 </body>
 </html>
