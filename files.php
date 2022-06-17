@@ -29,6 +29,8 @@
             echo "The file you are trying to upload is not an image...";
         }
     }
+
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,8 +55,8 @@
 
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="uploadImage-tab" data-bs-toggle="tab" data-bs-target="#uploadImage" type="button" role="tab" aria-controls="uploadImage" aria-selected="true">Subir Archivo</button>
-            <button class="nav-link" id="uploads-tab" data-bs-toggle="tab" data-bs-target="#uploads" type="button" role="tab" aria-controls="uploads" aria-selected="false">Lista de Archivos</button>
+            <button class="nav-link active" id="uploadImage-tab" data-bs-toggle="tab" data-bs-target="#uploadImage" type="button" role="tab" aria-controls="uploadImage" aria-selected="true">Upload Files</button>
+            <button class="nav-link" id="uploads-tab" data-bs-toggle="tab" data-bs-target="#uploads" type="button" role="tab" aria-controls="uploads" aria-selected="false">Uploads</button>
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
@@ -91,14 +93,15 @@
                             ";
                         }else{
                             echo "
-                                <td>$file</td>
+                                <td>
+                                    <a class=\"nav-link\" aria-disabled=\"false\" href=\"./file_view.php?item=$file\">$file</a>
+                                </td>
                             </tr>
                             ";
                         }
                     }
                 ?>
                 </tbody>
-                
             </table>
         </div>
     </div>
