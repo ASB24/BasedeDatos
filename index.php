@@ -17,11 +17,11 @@
                     fclose($reader);
                     signIn($name);
                 }else{
-                    echo "La contraseña ingresada no es correcta";
+                    echo "The password for the given user is not correct.";
                 }
                 fclose($reader);
             }else{
-                echo "El usuario no existe...";
+                echo "The user does not exist...";
             }
         }
         else if(isset($_POST['create']))
