@@ -31,6 +31,11 @@
     }
 
     
+    if(isset($_GET['m']) && $_GET['m'] == true){
+        echo "Upload deleted succesfully";
+    }
+
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
