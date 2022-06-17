@@ -8,6 +8,10 @@
         mkdir($dir_name, 0777);
     }
 
+    $uploadError = false;
+    $notImageError = false;
+    $fileUploaded = false;
+
     if( $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])){
         $text = $_POST['comment'];
         $file_name = $dir_name.$name.date("_Ymd_Hi");
@@ -20,19 +24,19 @@
             //Upload image
             $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
             if( move_uploaded_file( $_FILES['image']['tmp_name'], $file_name.".".$extension ) ){
-                echo "Upload completed!";
+                $fileUploaded = true;
             }else{
-                echo "There was a problem uploading your file!";
+                $uploadError = true;
             }
 
         }else{
-            echo "The file you are trying to upload is not an image...";
+            $notImageError = true;
         }
     }
 
-    
+    $deletedConfirm = false;
     if(isset($_GET['m']) && $_GET['m'] == true){
-        echo "Upload deleted succesfully";
+        $deletedConfirm = true;
     }
 
     
@@ -56,6 +60,14 @@
 <body>
     <?php
         echo "<h1>Bienvenid@, $name</h1>";
+        if($deletedConfirm){
+            echo '
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <strong>Done!</strong> Files successfully deleted.
+                </div>
+            ';
+        }
     ?>
 
     <nav>
@@ -82,7 +94,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col"><i class="fa-regular fa-file-image"></i> File</th>
+                        <th scope="col"><i class="fa-regular fa-file-image"></i> Image</th>
                         <th scope="col"><i class="fa-regular fa-comment-dots"></i> Comment</th>
                     </tr>
                 </thead>
@@ -110,9 +122,31 @@
             </table>
         </div>
     </div>
-    <ul>
-        
-    </ul>
+    <?php
+        if($uploadError){
+            echo '
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <strong>Error 3</strong> File could not be uploaded...
+                </div>
+            ';
+        }else if($notImageError){
+            echo '
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <strong>Error 4</strong> The file you are trying to upload is not an image!
+                </div>
+            ';
+        }else if($fileUploaded){
+            echo '
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <strong>Done!</strong> Files uploaded successfully!
+                </div>
+            ';
+        }
+    ?>
     
+    <script src="./index.js"></script>
 </body>
 </html>

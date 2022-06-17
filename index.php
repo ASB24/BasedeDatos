@@ -3,6 +3,9 @@
     $pass = '';
     $file = '';
 
+    $userExists = true;
+    $correctPassword = true;
+
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         $name = $_POST['name'];
@@ -17,11 +20,11 @@
                     fclose($reader);
                     signIn($name);
                 }else{
-                    echo "The password for the given user is not correct.";
+                    $correctPassword = false;
                 }
                 fclose($reader);
             }else{
-                echo "The user does not exist...";
+                $userExists = false;
             }
         }
         else if(isset($_POST['create']))
@@ -49,6 +52,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
     <link rel="stylesheet" href="./style.css">
@@ -68,5 +72,24 @@
         <input name="create" id="create" class="btn btn-primary" type="submit" value="Crear">
         <input name="login" id="login" class="btn btn-primary" type="submit" value="Ingresar">
     </form>
+    <?php
+        if(!$userExists){
+            echo '
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <strong>Error 1</strong> User does not exist!
+                </div>
+            ';
+        }else if(!$correctPassword){
+            echo '
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <strong>Error 2</strong> Credentials for user are not correct...
+                </div>
+            ';
+        }
+    ?>
+    
+    <script src="./index.js"></script>
 </body>
 </html>
