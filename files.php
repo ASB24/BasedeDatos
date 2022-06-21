@@ -4,8 +4,11 @@
     date_default_timezone_set('America/Santo_Domingo');
 
     $dir_name = "./uploads/$name/";
-    if(!is_dir($dir_name)){
-        mkdir($dir_name, 0777);
+    if(!is_dir("./uploads")){
+        mkdir("./uploads", 0777);
+        if(!is_dir($dir_name)){
+            mkdir($dir_name, 0777);
+        }
     }
 
     $uploadError = false;

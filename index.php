@@ -6,6 +6,11 @@
     $userExists = true;
     $correctPassword = true;
 
+    $dir_name = "./users/";
+    if(!is_dir($dir_name)){
+        mkdir($dir_name, 0777);
+    }
+
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         $name = $_POST['name'];
