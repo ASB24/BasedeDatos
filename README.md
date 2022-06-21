@@ -16,7 +16,7 @@ Tools & Assets:
 ![Upload List SS](./screenshots/Pasted%20image%2020220617165624.png)
 - Read comment contents on clicking text file in Comment column
 ![Comment Read SS](./screenshots/Pasted%20image%2020220617165702.png)
-- Delete upload by adding "&b=true" to url request query
+- Delete upload by adding "&b=true" to url request query or pressing the button
 ![Delete Upload SS 1](./screenshots/Pasted%20image%2020220617165733.png)
 ![Delete Upload SS 2](./screenshots/Pasted%20image%2020220617165806.png)
 ![Delete Upload SS 3](./screenshots/Pasted%20image%2020220617165827.png)
